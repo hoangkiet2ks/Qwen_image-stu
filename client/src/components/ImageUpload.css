@@ -1,0 +1,108 @@
+/* ── ImageUpload.css ──────────────────────────────────────────── */
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--r);
+  padding: 36px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  background: transparent;
+  outline: none;
+}
+
+.drop-zone:hover,
+.drop-zone:focus-visible {
+  border-color: var(--accent);
+  background: rgba(22, 119, 255, 0.08);
+}
+
+.drop-zone:focus-visible {
+  box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.24);
+}
+
+.upload-icon {
+  width: 52px;
+  height: 52px;
+  color: var(--accent);
+  transition: color 0.2s;
+}
+
+.drop-zone:hover .upload-icon {
+  color: var(--accent-h);
+}
+
+.drop-text {
+  font-size: 0.88rem;
+  color: var(--text-mid);
+  text-align: center;
+}
+
+.drop-text span {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(22,119,255,0.55);
+}
+
+.drop-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Preview */
+.image-preview {
+  position: relative;
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  aspect-ratio: 4 / 3;
+  background: var(--surface);
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.clear-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(6, 11, 22, 0.78);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s;
+  backdrop-filter: blur(4px);
+  z-index: 5;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.clear-btn svg {
+  width: 14px;
+  height: 14px;
+  color: #fff;
+}
+
+.clear-btn:hover {
+  background: rgba(6, 11, 22, 0.92);
+  transform: scale(1.1);
+}

@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "baseRules": [
+    "Maintain the original composition and camera framing unless the requested edit changes them.",
+    "Keep the image content outside the painted mask unchanged.",
+    "Match the surrounding lighting, shadows, color temperature, sharpness, and texture.",
+    "Create natural transitions without a visible seam, halo, bright fringe, or patched edge."
+  ],
+  "intents": [
+    {
+      "id": "small_region_fix",
+      "label": "Sửa chi tiết nhỏ",
+      "synonyms": ["sửa kính", "đổi màu nơ", "thêm phụ kiện", "sửa chi tiết", "xóa chữ", "xóa ui", "watermark"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.5, "steps": 4, "growMask": 5, "skinToneMatch": false },
+      "qualityRules": ["Change only the selected small detail and retain its original scale and placement."],
+      "negativePrompt": "different face, changed composition, extra objects, distorted details"
+    },
+    {
+      "id": "garment_edit",
+      "label": "Chỉnh trang phục",
+      "synonyms": ["đổi áo", "đổi váy", "crop áo", "thêm tạp dề", "đổi quần", "đổi trang phục", "bikini"],
+      "workflow": "reconstruct",
+      "parameters": { "denoise": 0.68, "steps": 6, "growMask": 10, "skinToneMatch": true },
+      "qualityRules": ["Keep fabric construction, folds, seams, and the natural boundary between fabric and skin coherent."],
+      "negativePrompt": "different face, altered body proportions, malformed hands, extra limbs, distorted garment"
+    },
+    {
+      "id": "object_remove",
+      "label": "Xóa đối tượng",
+      "synonyms": ["xóa điện thoại", "xóa vật", "xóa người", "bỏ chữ", "bỏ ui", "remove object"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.6, "steps": 6, "growMask": 7, "skinToneMatch": false },
+      "qualityRules": ["Reconstruct the masked area from surrounding scene geometry, texture, and lighting."],
+      "negativePrompt": "new object, duplicated object, changed subject, seam, halo"
+    },
+    {
+      "id": "background_regen",
+      "label": "Thay nền",
+      "synonyms": ["đổi nền", "thay nền", "đổi phòng", "đổi cảnh", "background", "mở rộng nền"],
+      "workflow": "reconstruct",
+      "parameters": { "denoise": 0.68, "steps": 6, "growMask": 4, "skinToneMatch": false },
+      "qualityRules": ["Keep the main subject unchanged and make the new environment perspective and lighting coherent."],
+      "negativePrompt": "changed face, changed outfit, changed pose, duplicate subject"
+    },
+    {
+      "id": "subject_addition",
+      "label": "Thêm đối tượng vào cảnh",
+      "synonyms": ["thêm người", "thêm nhân vật", "thêm vật", "thêm đồ", "thêm chân", "thêm tay"],
+      "workflow": "reconstruct",
+      "parameters": { "denoise": 0.7, "steps": 6, "growMask": 10, "skinToneMatch": false },
+      "qualityRules": ["Place the new subject or object with consistent scale, perspective, contact shadows, and scene lighting."],
+      "negativePrompt": "duplicate main subject, wrong perspective, floating object, malformed anatomy"
+    },
+    {
+      "id": "pose_expression",
+      "label": "Sửa tư thế hoặc biểu cảm",
+      "synonyms": ["sửa tay", "sửa chân", "đổi tư thế", "pose", "peace", "chữ v", "ngửa đầu", "biểu cảm"],
+      "workflow": "reconstruct",
+      "parameters": { "denoise": 0.66, "steps": 6, "growMask": 8, "skinToneMatch": true },
+      "qualityRules": ["Use a clear final pose state with anatomically coherent joints, fingers, fabric tension, and contact points."],
+      "negativePrompt": "different face, bad hands, fused fingers, extra digits, extra limbs, distorted anatomy"
+    },
+    {
+      "id": "scene_integration",
+      "label": "Hòa nhân vật vào nền",
+      "synonyms": ["hợp nền hơn", "hòa vào nền", "bớt giả", "ảnh ghép", "khớp môi trường", "hợp cảnh"],
+      "workflow": "scene",
+      "parameters": { "denoise": 0.5, "steps": 4, "growMask": 3, "skinToneMatch": true },
+      "qualityRules": ["Blend the subject silhouette into the environment. Match ambient exposure, color cast, contact shadows, depth, and edge texture."],
+      "negativePrompt": "changed face, changed outfit, changed pose, halo, bright fringe, floating appearance"
+    },
+    {
+      "id": "light_color_match",
+      "label": "Khớp ánh sáng và màu",
+      "synonyms": ["khớp màu", "ấm hơn", "lạnh hơn", "bớt sáng", "ánh sáng", "color grade", "màu da"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.42, "steps": 4, "growMask": 3, "skinToneMatch": true },
+      "qualityRules": ["Adjust only exposure, color temperature, and local contrast. Preserve all geometry and material detail."],
+      "negativePrompt": "changed geometry, changed face, changed pose, plastic skin, blurred texture"
+    },
+    {
+      "id": "edge_texture_fix",
+      "label": "Sửa viền hoặc texture",
+      "synonyms": ["sửa viền", "halo", "lem tóc", "mép lệch", "da bị bệt", "texture", "vải bị nhòe"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.42, "steps": 4, "growMask": 2, "skinToneMatch": true },
+      "qualityRules": ["Repair only the narrow transition band or selected texture area. Preserve material separation between skin, hair, fabric, and background."],
+      "negativePrompt": "halo, bright fringe, hard edge, plastic skin, blurred fabric, changed content"
+    },
+    {
+      "id": "contact_shadow",
+      "label": "Thêm bóng tiếp xúc",
+      "synonyms": ["thêm bóng", "bóng dưới chân", "bóng tiếp xúc", "đang lơ lửng", "contact shadow"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.48, "steps": 4, "growMask": 5, "skinToneMatch": false },
+      "qualityRules": ["Create a soft contact shadow consistent with the scene key light and ground texture."],
+      "negativePrompt": "floating subject, hard black shadow, changed subject, changed ground geometry"
+    },
+    {
+      "id": "final_finish",
+      "label": "Hoàn thiện ảnh",
+      "synonyms": ["chốt bản cuối", "hoàn thiện ảnh", "làm nét", "mất nét", "ảnh bệt", "final"],
+      "workflow": "inpaint",
+      "parameters": { "denoise": 0.3, "steps": 4, "growMask": 0, "skinToneMatch": true },
+      "qualityRules": ["Preserve all content. Improve only consistency of fine texture, film grain, sharpness, and color grading."],
+      "negativePrompt": "different face, changed pose, changed outfit, oversharpen, artifacts, loss of detail"
+    }
+  ]
+}

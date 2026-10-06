@@ -1,0 +1,95 @@
+.model-selector {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.model-selector.loading,
+.model-selector.error {
+  padding: 12px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.model-selector.error {
+  color: #ef4444;
+}
+
+.model-selector-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.model-selector-toggle:hover {
+  background: var(--surface-3);
+}
+
+.model-selector-dropdown {
+  /* Keep the menu in document flow so it pushes the sections below it
+     down instead of covering the saved-prompts panel/action button. */
+  position: static;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  max-height: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
+.model-search-input {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  margin-bottom: 8px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.model-list {
+  overflow-y: auto;
+  max-height: 180px;
+}
+
+.model-item {
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 1px;
+}
+
+.model-item:hover {
+  background: var(--surface-3);
+}
+
+.model-item.sel {
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--accent);
+}
+
+.model-close-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: var(--surface-3);
+  border: none;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+}

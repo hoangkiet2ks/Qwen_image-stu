@@ -1,0 +1,32 @@
+.composition-studio { display: grid; gap: 14px; }
+.studio-header { padding: 14px; border: 1px solid rgba(139,116,255,.45); border-radius: var(--r-sm); background: rgba(81,57,170,.14); }
+.studio-header p { margin: 6px 0 0; color: var(--text-muted); font-size: .78rem; line-height: 1.45; }
+.studio-empty { min-height: 150px; display: grid; place-content: center; gap: 6px; border: 1px dashed #806cff; border-radius: var(--r-sm); color: var(--text); background: rgba(68,52,133,.15); font: inherit; }
+.studio-empty small { color: var(--text-muted); }
+.studio-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 8px; }
+.studio-actions button, .studio-apply { min-height: 44px; }
+.studio-canvas-wrap { position: relative; overflow: hidden; border: 1px solid var(--border); border-radius: var(--r-sm); background-color: #101a2e; background-image: linear-gradient(45deg, #17243b 25%, transparent 25%), linear-gradient(-45deg, #17243b 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #17243b 75%), linear-gradient(-45deg, transparent 75%, #17243b 75%); background-size: 22px 22px; background-position: 0 0, 0 11px, 11px -11px, -11px 0; }
+.studio-canvas { display: block; width: 100%; height: auto; max-height: 62dvh; touch-action: none; cursor: grab; }
+.studio-canvas:active { cursor: grabbing; }
+.studio-canvas-empty { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; padding: 28px; color: var(--text-muted); text-align: center; font-size: .8rem; pointer-events: none; }
+.studio-drag-hint { margin: -5px 0 0; color: var(--text-muted); font-size: .7rem; line-height: 1.35; }
+.studio-section-head { display: flex; gap: 8px; align-items: baseline; justify-content: space-between; }
+.studio-section-head strong { color: var(--text); font-size: .83rem; }
+.studio-section-head small { color: var(--text-muted); font-size: .7rem; }
+.studio-section-head button { padding: 3px 0; border: 0; color: #ffabb5; background: transparent; font: inherit; font-size: .72rem; }
+.studio-layers, .studio-transform, .studio-fixes, .studio-prompt { padding: 12px; border: 1px solid var(--border); border-radius: var(--r-sm); background: rgba(27,47,87,.32); }
+.studio-layer-list { display: flex; gap: 8px; overflow-x: auto; margin-top: 10px; padding-bottom: 2px; }
+.studio-layer-list button { display: flex; flex: 0 0 145px; gap: 8px; align-items: center; min-height: 54px; padding: 6px; border: 1px solid var(--border); border-radius: 9px; color: var(--text-muted); background: #101b31; text-align: left; font: inherit; }
+.studio-layer-list button.active { border-color: #9b7cff; background: rgba(122,92,255,.3); color: #fff; }
+.studio-layer-list img { width: 38px; height: 38px; object-fit: contain; background: #202b40; }
+.studio-layer-list strong, .studio-layer-list small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.studio-layer-list strong { font-size: .72rem; }.studio-layer-list small { margin-top: 3px; font-size: .61rem; }
+.studio-transform { display: grid; gap: 11px; }
+.studio-transform label { display: grid; gap: 6px; color: var(--text-muted); font-size: .74rem; }.studio-transform label b { color: var(--text); }
+.studio-transform input { width: 100%; accent-color: var(--accent); }
+.studio-transform-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.studio-transform-actions button, .studio-fixes button { min-height: 40px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); background: #12203a; font: inherit; font-size: .71rem; }
+.studio-fixes { display: grid; gap: 10px; }.studio-fixes > div:last-child { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }.studio-fixes button.active { border-color: #9b7cff; color: #fff; background: rgba(122,92,255,.36); }
+.studio-prompt { display: grid; gap: 8px; color: var(--text); font-size: .8rem; font-weight: 700; }.studio-prompt textarea { min-height: 95px; resize: vertical; border: 1px solid var(--border); border-radius: 8px; padding: 10px; color: var(--text); background: #081326; font: inherit; font-size: .78rem; line-height: 1.45; }
+.studio-file-input { display: none; }.studio-error { margin: 0; padding: 10px; border-radius: 8px; color: #ffbdc5; background: rgba(156,43,59,.25); font-size: .75rem; }.studio-apply { width: 100%; }
+@media (max-width: 390px) { .studio-actions { grid-template-columns: 1fr; }.studio-transform-actions { grid-template-columns: 1fr; } }

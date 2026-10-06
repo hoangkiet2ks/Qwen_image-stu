@@ -1,0 +1,41 @@
+/* ── index.css — minimal global resets (main styles live in App.css) ── */
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0b1426;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #28466f;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4096ff;
+}
+
+::selection {
+  background: rgba(22, 119, 255, 0.3);
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2.5px solid rgba(64, 150, 255, 0.7);
+  outline-offset: 2px;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: var(--accent, #1677ff);
+}

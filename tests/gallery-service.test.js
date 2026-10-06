@@ -1,0 +1,28 @@
+const { test } = require('node:test');
+const assert = require('node:assert/strict');
+const fs = require('fs/promises');
+const os = require('os');
+const path = require('path');
+const express = require('express');
+const sharp = require('sharp');
+const { installGallery } = require('../gallery-service');
+test('gallery lists app images, generates thumbnails and deletes only the selected file', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'gallery-test-'));
+  const appDir = path.join(root, 'app'); await fs.mkdir(appDir);
+  const png = await sharp({ create: { width: 10, height: 10, channels: 3, background: '#234567' } }).png().toBuffer();
+  await fs.writeFile(path.join(appDir, 'one.png'), png);
+  await fs.writeFile(path.join(root, 'outside.png'), png);
+  await fs.writeFile(path.join(appDir, 'notes.txt'), 'not an image');
+  const app = express(); installGallery(app, appDir);
+  const server = app.listen(0, '127.0.0.1'); await new Promise(resolve => server.once('listening', resolve));
+  t.after(() => server.close());
+  const base = `http://127.0.0.1:${server.address().port}/api/gallery`;
+  const list = await (await fetch(base)).json(); assert.equal(list.images.length, 1);
+  assert.equal((await fetch(`${base}/one.png?thumbnail=1`)).headers.get('content-type'), 'image/webp');
+  assert.equal((await fetch(`${base}/notes.txt`, { method: 'DELETE' })).status, 400);
+  assert.equal((await fetch(`${base}/..%5Coutside.png`, { method: 'DELETE' })).status, 400);
+  assert.equal((await fetch(`${base}/one.png`, { method: 'DELETE' })).status, 200);
+  await assert.rejects(fs.stat(path.join(appDir, 'one.png')), { code: 'ENOENT' });
+  assert.deepEqual(await fs.readFile(path.join(root, 'outside.png')), png);
+  assert.equal((await fetch(`${base}/one.png`, { method: 'DELETE' })).status, 404);
+});

@@ -1,0 +1,48 @@
+.intent-plan {
+  margin-top: 14px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  background: rgba(27, 47, 87, 0.36);
+}
+
+.intent-plan-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.intent-plan-head p,
+.intent-plan-summary,
+.intent-expanded-prompt p {
+  margin: 4px 0 0;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+
+.intent-resolve { white-space: nowrap; font-size: 0.76rem; }
+.intent-plan-result { margin-top: 12px; }
+
+.intent-scope { margin-top: 12px; }
+.intent-scope > span { display: block; margin-bottom: 7px; color: var(--text); font-size: 0.78rem; font-weight: 700; }
+.intent-scope > small { display: block; margin-top: 6px; color: var(--text-muted); font-size: 0.7rem; line-height: 1.4; }
+.intent-scope-options { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.intent-scope-options button { min-height: 36px; border: 1px solid var(--border); border-radius: 8px; color: var(--text-muted); background: rgba(4, 12, 30, 0.35); font: inherit; font-size: 0.74rem; font-weight: 700; }
+.intent-scope-options button.active { border-color: #8d78ff; color: #fff; background: rgba(122, 92, 255, 0.45); }
+
+.intent-tags { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+.intent-tags strong { color: var(--text); font-size: 0.83rem; }
+.intent-tags span { padding: 3px 7px; border-radius: 999px; color: #dcd2ff; background: rgba(122, 92, 255, 0.28); font-size: 0.7rem; }
+.intent-tags small { color: var(--text-muted); font-size: 0.68rem; }
+
+.intent-expanded-prompt { margin-top: 9px; color: var(--text-muted); font-size: 0.76rem; }
+.intent-expanded-prompt summary { cursor: pointer; color: #bfb0ff; }
+.intent-expanded-prompt pre { max-height: 160px; overflow: auto; margin: 8px 0; padding: 9px; border-radius: 7px; white-space: pre-wrap; font: 0.7rem/1.45 inherit; color: #d6e4ff; background: rgba(4, 12, 30, 0.6); }
+.intent-apply { width: 100%; margin-top: 10px; }
+
+@media (max-width: 480px) {
+  .intent-plan-head { align-items: flex-start; flex-direction: column; }
+  .intent-resolve { width: 100%; }
+}

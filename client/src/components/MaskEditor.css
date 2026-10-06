@@ -1,0 +1,260 @@
+.mask-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.mask-editor.empty {
+  padding: 1rem;
+  text-align: center;
+  color: var(--muted, #888);
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.mask-toolbar {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.tool-btn {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-mid, #d7e3f8);
+  border-radius: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 8px;
+}
+
+.tool-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+.tool-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.tool-btn.active {
+  background: var(--accent, #7c5cff);
+  border-color: var(--accent, #7c5cff);
+  color: #fff;
+}
+
+.tool-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.tool-label {
+  font-size: 0.72rem;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.mask-canvas-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.mask-canvas-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+}
+
+.mask-expand-trigger {
+  position: absolute;
+  right: 12px;
+  bottom: 14px;
+  z-index: 3;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 9px;
+  color: #fff;
+  background: rgba(8, 17, 35, .82);
+  font: inherit;
+  font-size: .76rem;
+}
+
+.mask-canvas-wrap.is-expanded {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100vw;
+  height: 100dvh;
+  overflow: auto;
+  border-radius: 0;
+  background: #071124;
+  touch-action: pan-x pan-y;
+}
+
+/* In navigation mode the overlay canvas ignores the touch. Native scrolling
+   can therefore pan an enlarged image left/right with just one finger. */
+.mask-canvas-wrap.is-expanded.is-navigating {
+  touch-action: pan-x pan-y;
+}
+
+.mask-canvas-wrap.is-expanded:not(.is-navigating) {
+  touch-action: none;
+}
+
+.mask-canvas-wrap.is-expanded .mask-canvas-stage {
+  position: relative;
+  inset: auto;
+  min-width: 100%;
+  margin: 64px auto 28px;
+}
+
+.mask-zoom-controls {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  z-index: 1002;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(8, 17, 35, .95);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.mask-zoom-controls::-webkit-scrollbar { display: none; }
+
+.mask-zoom-controls button {
+  flex: 0 0 auto;
+  min-width: 40px;
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  background: #14223e;
+  font: inherit;
+  font-size: 1.1rem;
+}
+.mask-zoom-controls button:first-child {
+  min-width: 82px;
+  font-size: .78rem;
+}
+.mask-zoom-controls button.active {
+  border-color: var(--accent);
+  color: #fff;
+  background: var(--accent);
+}
+.mask-zoom-controls strong { min-width: 48px; text-align: center; color: var(--text); font-size: .82rem; }
+.mask-zoom-controls .mask-zoom-close { margin-left: auto; padding: 0 13px; font-size: .82rem; }
+
+.mask-canvas-wrap.is-expanded .mask-canvas { touch-action: none; }
+
+.base-canvas,
+.mask-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.mask-canvas {
+  cursor: crosshair;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+  mix-blend-mode: normal;
+}
+
+.mask-canvas:not(.visible) {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Semi-transparent red overlay for the mask so it shows on top of the image */
+.mask-canvas.visible {
+  background: transparent;
+}
+
+/* The canvas draws white pixels with low alpha so the user sees what's painted */
+.mask-canvas {
+  --mask-alpha: 0.5;
+}
+
+.brush-control {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.brush-control label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--muted, #888);
+}
+
+.brush-control strong {
+  color: var(--accent, #7c5cff);
+  font-weight: 600;
+}
+
+.brush-control input[type="range"] {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 2px;
+  outline: none;
+}
+
+.brush-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--accent, #7c5cff);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.brush-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  background: var(--accent, #7c5cff);
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+}
+
+@media (max-width: 640px) {
+  .mask-toolbar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tool-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

@@ -1,0 +1,39 @@
+/* ── PromptInput.css ──────────────────────────────────────────── */
+
+.prompt-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.prompt-textarea {
+  width: 100%;
+  min-height: 110px;
+  padding: 12px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.prompt-textarea::placeholder {
+  color: var(--text-muted);
+}
+
+.prompt-textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(22, 119, 255, 0.22);
+  background: #101d33;
+}
+
+.char-count {
+  align-self: flex-end;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
